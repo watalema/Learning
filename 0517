@@ -1,4 +1,6 @@
 #1.
+
+
 #2.两数相加
 # Definition for singly-linked list.
 # class ListNode:
@@ -52,6 +54,7 @@ class Solution:
             cur.next=ListNode(carry)
         return tmp.next
 
+
 #3.无重复的最长子串
 #我的解法：O(n^2),以每个字母开头求不重复子串，取最长的子串
 class Solution:
@@ -90,3 +93,16 @@ class Solution:
                     max_len=len(tmp_str)
         return max_len
 		
+
+4.两个有序数组的中位数
+我的解法：
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        nums=nums1+nums2
+        nums.sort()
+        n=len(nums)
+        if n%2:
+            rtn=float(nums[n//2])
+        else:
+            rtn=float((nums[n//2]+nums[n//2-1])/2)
+        return rtn
