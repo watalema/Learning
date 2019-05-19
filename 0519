@@ -1,0 +1,57 @@
+5.最长回文子串
+#我的解法：引入start和end作为标志位，方便处理有相连的重复字符的情况
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n=len(s)
+        if n==0 or n==1:
+            return s
+        max_len=1
+        p=0
+        i=0
+        while i< n:
+            start=i
+            end=i
+            while end<n-1 and s[end]==s[end+1]:
+                end+=1
+            i=end+1
+            while start>0 and end<n-1 and s[start-1]==s[end+1]:
+                start-=1
+                end+=1
+            tmp_len=end-start+1
+            if max_len<tmp_len:
+                max_len=tmp_len
+                p=start
+        if max_len==1:
+            return s[0]
+        else:
+            return s[p:p+max_len]
+           
+6.Z字形变换
+#我的解法：思路清晰的，但是修改了好多次，因为对题意的细节没有搞清楚
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        n=len(s)
+        if numRows==1 or numRows==0 or n==0 or n==1 or numRows>=n:
+            return s
+        s_rows=['']*numRows
+        i=0
+        kN=0
+        p=0
+        q=0
+        for i in range(n):
+            if kN==0 or (p==0 and kN==1):
+                s_rows[p]+=s[i]
+                p+=1
+                if p==numRows:
+                    kN=1
+                    p=numRows-2
+            else:
+                s_rows[p]+=s[i]
+                p-=1
+                if p==0:
+                    kN=0
+                    p=0
+        s_rtn=''
+        for j in s_rows:
+            s_rtn+=j
+        return s_rtn
