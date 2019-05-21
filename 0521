@@ -1,0 +1,102 @@
+#9.回文数
+#我的解答：
+将整数转为字符串，看字符串是否与反转后的相等
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        x=str(x)
+        rex=x[::-1]
+        return x==rex
+ #整数转字符串：x=str(x)
+ #字符串转整数：x=int(x)
+ #整数转列表不可以
+ #字符串转列表：x=list(x)
+ #列表转字符串：x=''.join(x)
+ 
+#11.盛水最多的容器
+ #我的解答：
+ 双指针，low从前到后，high从后到前，如果前面的板子短，low往后移，否则high往前移，
+ class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        n=len(height)
+        low=0
+        high=n-1
+        max_area=0
+        while low<high:
+            if height[high]<height[low]:
+                tmp_area=height[high]*(high-low)
+                high-=1
+            else:
+                tmp_area=height[low]*(high-low)
+                low+=1
+            if max_area<tmp_area:
+                max_area=tmp_area
+        return max_area
+        
+#12.整数转罗马数字
+  #我的解法：用字典，求每个字符对应的数字的倍数，取余
+  class Solution:
+    def intToRoman(self, num: int) -> str:
+        roman={1000:'M',900:'CM',500:'D',400:'CD',100:'C',90:'XC',50:'L',40:'XL',
+              10:'X',9:'IX',5:'V',4:'IV',1:'I'}
+        rtn=''
+        for i in roman:
+            tmp=num//i
+            num=num%i
+            rtn+=roma[i]*tmp
+        return rtn
+        
+#13.罗马数字转整数
+#我的解法：用字典，先计算复合字符，再计算单个字符
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        sg_roman={'M':1000,'D':500,'C':100,'L':50,'X':10,'V':5,'I':1}
+        db_roman={'CM':900,'CD':400,'XC':90,'XL':40,'IX':9,'IV':4}
+        rtn=0
+        for db in db_roman:
+            if db in s:
+                rtn+=db_roman[db]
+                s=s.replace(db,'')
+        for i in s:
+            rtn+=sg_roman[i]
+        return rtn
+        
+#14.最长公共前缀
+#我的解法：暴力法，在最短的字符串长度范围内，一个一个对比
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        n=len(strs)
+        if n==0:
+            return ''
+        if n==1:
+            return strs[0]
+        rtn=''
+        min_len=len(strs[0])
+        for s in strs:
+            if min_len>len(s):
+                min_len=len(s)
+        if min_len==0:
+            return ''
+        for i in range(min_len):
+            tmp=strs[0][i]
+            k=1
+            for j in range(1,n):
+                if strs[j][i]==tmp:
+                    k+=1
+                else:
+                    break
+            if k==n:
+                rtn+=tmp
+            else:
+                break
+        return rtn
+        
+#优秀解法：用zip函数，zip(*strs)
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        s_zip=zip(*strs)
+        rtn=''
+        for s in s_zip:
+            if len(set(s))>1:
+                break
+            rtn+=s[0]
+        return rtn
