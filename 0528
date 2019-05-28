@@ -1,0 +1,63 @@
+#15三数之和：先排序，从第一个数开始，取三人组中的第一个，再从后面寻找2个能跟该数组成合为0的组合，取后面2个数时使用双指针
+注意：超出时间限制，其中有2个细节问题：1,2
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        if n < 3:
+            return []
+        sorted_nums = sorted(nums)   
+        rtn = []
+        for i in range(n):
+            if i==0 or sorted_nums[i]>sorted_nums[i-1]:         -----------------------------------------------------------1
+                low = i + 1
+                high = n - 1
+                while low < high:
+                    sum3 = sorted_nums[i] + sorted_nums[low] + sorted_nums[high]
+                    if sum3 == 0:
+                        rtn.append([sorted_nums[i], sorted_nums[low], sorted_nums[high]])
+                        low += 1
+                        high -= 1
+                        while low < high and sorted_nums[low] == sorted_nums[low - 1]:       ------------------------------2
+                            low += 1
+                        while low < high and sorted_nums[high] == sorted_nums[high + 1]:
+                            high -= 1
+                    elif sum3 < 0:
+                        low += 1
+                    else:
+                        high -= 1
+        return rtn
+
+#20，有效的括号，注意只有反括号的情况
+class Solution:
+    def isValid(self, s: str) -> bool:
+        tmp=[]
+        d=['(','{','[']
+        f=[')','}',']']
+        for i in s:
+            if i in d or i in f:
+                tmp.append(i)
+            if  len(tmp)>1 and i in f:
+                if tmp[-2]==d[f.index(i)]:
+                    tmp.pop(-1)
+                    tmp.pop(-1)
+        return (s!=None and tmp==[])
+        
+#21.合并两个有序链表：注意输出的头结点是哪个
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        node=ListNode(None)
+        tmp_node=node
+        while l1 and l2:
+            if l1.val<l2.val:
+                tmp_node.next=l1
+                tmp_node=tmp_node.next
+                l1=l1.next
+            else:
+                tmp_node.next=l2
+                tmp_node=tmp_node.next
+                l2=l2.next
+        if l1:
+            tmp_node.next=l1
+        else:
+            tmp_node.next=l2
+        return node.next
