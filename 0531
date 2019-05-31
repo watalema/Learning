@@ -1,0 +1,22 @@
+#电话号码的字母组合
+#这是别人的解答，递归实现深度优先搜索
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if not digits:
+            return []
+        mapping={
+            '2':'abc',
+            '3':'def',
+            '4':'ghi',
+            '5':'jkl',
+            '6':'mno',
+            '7':'pqrs',
+            '8':'tuv',
+            '9':'wxyz'
+        }
+        rtn=[]
+        def BackTracking(idx,path=''):
+            if idx==len(digits):return rtn.append(path)
+            for i in mapping[digits[idx]]:BackTracking(idx+1,path+i)
+        BackTracking(0)
+        return rtn
