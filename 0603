@@ -29,3 +29,20 @@ class Solution:
                 nums.pop(i)
             i-=1
         return count
+#36.括号生成
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        rtn=[]
+        left=0
+        right=0
+        def BackTrack(s,left,right):
+            if len(s)==2*n:
+                rtn.append(s)
+                return
+            if left<n:
+                BackTrack(s+'(',left+1,right)
+            if right<left:
+                BackTrack(s+')',left,right+1)
+        
+        BackTrack('',0,0)
+        return rtn
