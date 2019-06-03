@@ -1,0 +1,31 @@
+#27.移除元素
+#我的解法，用了双指针，但效率低
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        if (len(nums)==1 and nums[0]==val) or nums==[]:
+            return 0
+        i=0
+        j=len(nums)-1
+        while i<=j:
+            if nums[i]==val:
+                del nums[i]
+                j-=1
+            else:
+                i+=1
+            if j>=0 and nums[j]==val:
+                del nums[j]
+            j-=1
+        return len(nums)
+        
+#好的解法：
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        i=len(nums)-1
+        count=0
+        while i>=0:
+            if nums[i]!=val:
+                count+=1
+            else:
+                nums.pop(i)
+            i-=1
+        return count
