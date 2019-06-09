@@ -55,3 +55,8 @@ class Solution:
         return rtn
         
 #优秀解法：
+
+#28.实现strstr
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        return haystack.find(needle)
