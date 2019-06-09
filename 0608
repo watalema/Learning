@@ -1,0 +1,30 @@
+#23.合并k个有序链表
+#优秀解法：分治
+class Solution:
+    def mergeKLists(self, lists):
+        length = len(lists)
+        if length == 0:
+            return None
+        if length == 1:
+            return lists[0]
+        if length == 2:
+            return self.mergeParts(lists[0], lists[1])
+        
+        mid = int(length/2)
+        left = self.mergeKLists(lists[0:mid])
+        right = self.mergeKLists(lists[mid:length])
+        return self.mergeParts(left, right)
+        
+    def mergeParts(self, list1, list2):
+        if not list1:
+            return list2
+        if not list1:
+            return list2
+        head = ListNode(0)
+        if list1.val <= list2.val:
+            head = list1
+            head.next = self.mergeParts(list1.next, list2)
+        else:
+            head = list2
+            head.next = self.mergeParts(list1, list2.next)
+        return head
