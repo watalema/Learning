@@ -1,0 +1,57 @@
+#24.两两交换链表中的节点
+#我的解法：
+class Solution:
+    def swapPairs(self, head: ListNode) -> ListNode:
+        rtn=ListNode(None)
+        preNode=ListNode(None)
+        preNode=rtn
+        preNode.next=head
+        while preNode.next and preNode.next.next:
+            cur1=preNode.next
+            cur2=cur1.next
+            nextNode=cur2.next
+            
+            preNode.next=cur2
+            cur2.next=cur1 
+            cur1.next=nextNode
+            preNode=cur1
+        return rtn.next
+        
+#25.k个一组反转链表
+#我的解法：将k个数先入栈后出栈，时间O(N2/K)
+class Solution:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        if head==None or k<1:
+            return head
+        node=head
+        tmpRtn=head
+        rtn=ListNode(None)
+        rtn=tmpRtn
+        flag=1
+        stack=[]
+        while node:
+            tmpNode=ListNode(None)
+            tmpNode=node
+            for i in range(k):
+                if tmpNode:
+                    tmpNode=tmpNode.next
+                else:
+                    flag=0
+                    break
+            if flag:
+                for j in range(k):
+                    stack.append(node.val)
+                    node=node.next
+                while stack:
+                    v=stack.pop()
+                    tmpRtn.val=v
+                    tmpRtn=tmpRtn.next
+                node=tmpNode
+            else:
+                while node:
+                    tmpRtn=node
+                    node=node.next
+                    tmpRtn=tmpRtn.next
+        return rtn
+        
+#优秀解法：
